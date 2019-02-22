@@ -15,6 +15,12 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
        })
    }
 
+   function fetchPromise(){
+       return new Promise(function (resolve,reject) {
+
+       })
+    }
+
    function loadProjectPage(projectSlug){
        fetch(projectSlug)
            .then(function (response) {

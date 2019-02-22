@@ -16,8 +16,21 @@ define([], function () {
        })
    }
 
+   function getProjects() {
+       return new Promise(function (resolve,reject) {
+           projectInstance.keys().then(function (keys) {
+               projectInstance.getItems(keys).then(function (results) {
+                   var returnArray = Object.keys(results).map(function(k) {return results[k] });
+                   resolve(returnArray);
+               })
+
+           })
+       })
+   }
+   
 
    return {
-       addProjects: addProjects
+       addProjects: addProjects,
+       getProjects: getProjects
    }
 });
