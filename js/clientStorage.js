@@ -10,7 +10,9 @@ define([], function () {
                projectInstance.setItem(project.slug, project)
                    .then(function () {
                        resolve();
-                   })
+                   }).catch(function (error) {
+                   console.log('Er is een error: ', error)
+               })
            });
 
        })
@@ -22,6 +24,8 @@ define([], function () {
                projectInstance.getItems(keys).then(function (results) {
                    var returnArray = Object.keys(results).map(function(k) {return results[k] });
                    resolve(returnArray);
+               }).catch(function (error) {
+                   console.log('Er is een error: ', error)
                })
 
            })
