@@ -4,20 +4,37 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
 
 
    function loadProjects(){
-       fetch(url)
-           .then(function (response) {
-               return response.json();
-           }).then(function (data) {
-               clientStorage.addProjects(data.projects)
-                   .then(function () {
-                       template.appendProjects(data.projects);
-               });
-       })
+       fetchPromise()
+           .then(function (status) {
+               document.getElementById('connection-status').innerHTML = status;
+               loadFromClientStorage();
+           })
    }
 
    function fetchPromise(){
        return new Promise(function (resolve,reject) {
 
+           fetch(url)
+               .then(function (response) {
+                   return response.json();
+               }).then(function (data) {
+               clientStorage.addProjects(data.projects)
+                   .then(function () {
+                       template.appendProjects(data.projects);
+                       resolve('Goede Connection, je krijgt nu via het netwerk projecten te zien. ')
+                   });
+           }).catch(function (error) {
+               console.log(error);
+
+               resolve('Geen connection, resultaten uit de cache');
+           })
+       })
+    }
+
+
+    function loadFromClientStorage(){
+       clientStorage.getProjects().then(function (projects) {
+           template.appendProjects(projects);
        })
     }
 
@@ -34,7 +51,8 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
 
    return {
        loadProjects: loadProjects,
-       loadProjectPage: loadProjectPage
+       loadProjectPage: loadProjectPage,
+       loadFromClientStorage: loadFromClientStorage
    }
 
 

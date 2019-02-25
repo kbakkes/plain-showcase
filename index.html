@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="local.appcache">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width-device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="Showcase for CMGT projects">
     <title>Project Showcase</title>
@@ -32,12 +32,15 @@
             <div id="first-load" class="center">
                 <div class="mdl-spinner mdl-js-spinner is-active"></div>
             </div>
+            <div id="connection-status" class="center"></div>
             <div class="mdl-grid">
                 <!--Dynamic Data Here-->
 
             </div>
             <div class="center">
-                <button class="mdl-button mdl-js-button  mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                <button
+                        onclick="pageEvents.loadFromClientStorage()"
+                        class="mdl-button mdl-js-button  mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                     show more
                 </button>
             </div>

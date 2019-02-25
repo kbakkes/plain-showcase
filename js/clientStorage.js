@@ -1,5 +1,5 @@
 define([], function () {
-   var  projectInstance = localforage.createInstance({
+   var projectInstance = localforage.createInstance({
        name: 'projects'
    });
 
