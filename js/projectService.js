@@ -1,6 +1,7 @@
 define(['./template.js', './clientStorage.js'], function(template, clientStorage){
    var url = 'https://cmgt.hr.nl:8000/api/projects/';
    var detailUrl = url + 'project.slug';
+   var tagsUrl = 'https://cmgt.hr.nl:8000/api/projects/tags';
 
 
    function loadProjects(){
@@ -8,16 +9,33 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
            .then(function (status) {
                document.getElementById('connection-status').innerHTML = status;
                loadFromClientStorage();
+               fetchTags();
            })
    }
 
+    function fetchTags(){
+        console.log('ik ga tags fetchen');
+        var fail = ['Verbind met internet om tags te zien'];
+        if (navigator.onLine) {
+            return new Promise(function (resolve, reject) {
 
-   
-
-
+                fetch(tagsUrl)
+                    .then(function (response) {
+                        return response.json();
+                    }).then(function (data) {
+                    template.appendTags(data.tags);
+                    resolve();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            })
+        } else {
+            template.appendTags(fail);
+        }
+    }
+    
    function fetchPromise(){
        return new Promise(function (resolve,reject) {
-
            fetch(url)
                .then(function (response) {
                    return response.json();
@@ -29,7 +47,6 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
                    });
            }).catch(function (error) {
                console.log(error);
-
                resolve('Geen connection, resultaten uit de cache');
            })
        })
@@ -56,7 +73,8 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
    return {
        loadProjects: loadProjects,
        loadProjectPage: loadProjectPage,
-       loadFromClientStorage: loadFromClientStorage
+       loadFromClientStorage: loadFromClientStorage,
+       fetchTags: fetchTags
    }
 
 

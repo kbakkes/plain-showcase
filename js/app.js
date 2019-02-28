@@ -7,6 +7,9 @@ window.pageEvents = {
     },
     loadFromClientStorage: function () {
         projectService.loadFromClientStorage();
+    },
+    fetchTags: function () {
+        projectService.fetchTags();
     }
 };
 projectService.loadProjects();

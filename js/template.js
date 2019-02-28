@@ -18,17 +18,36 @@ define([], function () {
         projects.map(function (project) {
             return cardHTML += generateProjectCards(project);
         });
-
         document.querySelector('.mdl-grid').insertAdjacentHTML('beforeend', cardHTML);
 
         //fix voor IE
         document.querySelector('.mdl-layout__content').style.display = 'none';
         document.querySelector('.mdl-layout__content').style.display = 'inline-block';
+    }
 
+    function appendTags(tags){
+        console.log(tags);
+        var tagsHTML = "";
+
+
+        tags.map(function (tag) {
+            return tagsHTML += generateTagChips(tag);
+
+        });
+
+        document.querySelector('.tags').insertAdjacentHTML('beforeend',tagsHTML)
+    }
+
+    function generateTagChips(tag){
+        var template = document.querySelector('#tag-chip').innerHTML;
+        template = template.replace('{{tag}}', tag);
+
+        return template;
     }
 
 
     return {
-        appendProjects: appendProjects
+        appendProjects: appendProjects,
+        appendTags: appendTags
     }
 });

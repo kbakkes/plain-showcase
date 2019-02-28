@@ -35,7 +35,6 @@ self.addEventListener('install', function (event) {
                 return cache.addAll(projectsCacheFiles);
             })
     )
-
 });
 
 self.addEventListener('activate', function (event) {
@@ -62,14 +61,20 @@ self.addEventListener('fetch', function (event) {
     var requestUrl = new URL(event.request.url);
     var requestPath = requestUrl.pathname;
     var fileName = requestPath.substring(requestPath.lastIndexOf('/') + 1);
-    console.log(requestPath);
 
-    if(requestPath == projectsPath  || fileName == 'sw.js'){
-        //Online Strategy
+
+
+
+    if (navigator.onLine) {
         event.respondWith(fetch(event.request));
+
+    }else if(requestPath == projectsPath  || fileName == 'sw.js'){
+        event.respondWith(networkFirstStrategy(event.request))
+
     } else {
-        // Offline Strategy
+        console.log('ik ben offline');
         event.respondWith(cacheFirstStrategy(event.request))
+
     }
 
 });
