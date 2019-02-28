@@ -33,7 +33,7 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
             template.appendTags(fail);
         }
     }
-    
+
    function fetchPromise(){
        return new Promise(function (resolve,reject) {
            fetch(url)

@@ -3,7 +3,7 @@
 // New
 
 var projectsCacheName = 'projectsCachev1';
-var projectCacheImagesName = 'projectsCacheImagesv1';
+var projectCacheImagesName = 'projectsCacheImagesv2';
 
 var projectsCacheFiles = [
     'js/app.js',
