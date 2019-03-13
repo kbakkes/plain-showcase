@@ -2,7 +2,7 @@
 
 // New
 
-var projectsCacheName = 'projectsCachev1';
+var projectsCacheName = 'projectsCachev3';
 var projectCacheImagesName = 'projectsCacheImagesv2';
 
 var projectsCacheFiles = [
@@ -23,7 +23,7 @@ var projectsCacheFiles = [
     'resources/systemjs/system.js',
     'resources/systemjs/system-polyfills.js'
 ];
-var projectsPath = 'http://cmgt.hr.nl:8000/api/projects/';
+var projectsPath = 'https://cmgt.hr.nl:8000/api/projects/';
 
 
 self.addEventListener('install', function (event) {
@@ -63,12 +63,13 @@ self.addEventListener('fetch', function (event) {
     var fileName = requestPath.substring(requestPath.lastIndexOf('/') + 1);
 
 
-
+    console.log("Fetch sw");
 
     if (navigator.onLine) {
         event.respondWith(fetch(event.request));
 
     }else if(requestPath == projectsPath  || fileName == 'sw.js'){
+            console.log("REQPATH "+requestPath);
         event.respondWith(networkFirstStrategy(event.request))
 
     } else {
